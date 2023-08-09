@@ -24,11 +24,13 @@ function Filme() {
   
  
 
-  async function Vermais(){
+  async function Proximo(){
 
-    setCont(cont + 1);
+    let x = cont + 1;
+    setCont(x);
 
-    let url = 'http://www.omdbapi.com/?apikey=37d7cf75&s=' + filme + '&page=' + {cont};
+
+    let url = 'http://www.omdbapi.com/?apikey=37d7cf75&s=' + filme + '&page=' + x;
 
     let c = await axios.get(url)
 
@@ -71,13 +73,13 @@ function Filme() {
               
               </div>
 
-              
+              <div className='scroll'>
                 {filmes.map(item =>
 
                   <div className='lista'>
 
                     <p>{item.imdbID}</p>
-                    <p>{item.Title}</p>
+                    <p className='nome'>{item.Title}</p>
                     <p>{item.Year}</p>
                     <div className='pt' >
                       <img className='banner' src={item.Poster}/>
@@ -86,13 +88,15 @@ function Filme() {
 
                   </div>
 
-                )}
+                  )}
+              </div>
+
 
               <div className='botao'>
 
-                <button className='bbb' onClick={Vermais}> Ver Mais </button>
+                <button className='bbb' > Ver Mais </button>
 
-                <button className='bbb' > Proximo </button>
+                <button className='bbb' onClick={Proximo}> Proximo </button>
 
               </div>
             
