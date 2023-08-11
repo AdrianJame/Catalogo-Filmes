@@ -5,13 +5,15 @@ import axios from 'axios';
 
 function Filme() {
   const[filme, setFilme] = useState('')
-  const[filmes, setFilmes] = useState([])  
+  const[filmes, setFilmes] = useState([]) 
+  const[filmes2, setFilmes2] = useState([]) 
+  
 
   async function Buscarfilme(){
     let url = 'http://www.omdbapi.com/?apikey=37d7cf75&s=' + filme
 
     let r = await axios.get(url)
-
+    console.log(r);
     setFilmes(r.data.Search)
   }
 
@@ -19,7 +21,7 @@ function Filme() {
 
 
 
-    const [cont, setCont] = useState(0);
+    const [cont, setCont] = useState(1);
   
   
  
@@ -40,6 +42,18 @@ function Filme() {
     
   }
 
+  async function Vermais(){
+
+    let p = cont + 1;
+    setCont(p);
+    
+    let url = 'http://www.omdbapi.com/?apikey=37d7cf75&s=' + filme + '&page=' + p;
+
+    let v = await axios.get(url)
+
+    setFilmes([...filmes, ...v.data.Search]);
+    
+  }
 
   return (
     <div className="pagina-filme">
@@ -76,10 +90,10 @@ function Filme() {
               <div className='scroll'>
                 {filmes.map(item =>
 
-                  <div className='lista'>
+                  <div className='lista' >
 
                     <p>{item.imdbID}</p>
-                    <p className='nome'>{item.Title}</p>
+                    <p className='nome' title={item.Title}>{item.Title}</p>
                     <p>{item.Year}</p>
                     <div className='pt' >
                       <img className='banner' src={item.Poster}/>
@@ -89,12 +103,27 @@ function Filme() {
                   </div>
 
                   )}
+                    {/* {filmes2.map(item =>
+
+                      <div className='lista'>
+
+                        <p>{item.imdbID}</p>
+                        <p className='nome'>{item.Title}</p>
+                        <p>{item.Year}</p>
+                        <div className='pt' >
+                          <img className='banner' src={item.Poster}/>
+                        </div>
+                        
+
+                      </div>
+
+                    )} */}
               </div>
 
 
               <div className='botao'>
 
-                <button className='bbb' > Ver Mais </button>
+                <button className='bbb' onClick={Vermais}> Ver Mais </button>
 
                 <button className='bbb' onClick={Proximo}> Proximo </button>
 
